@@ -83,7 +83,6 @@
   // create array of video_ids, remove 0th id, shuffle
   var images_n = 729; // number of videos + 1
   var images_participant = 100; // number of videos + 1
-  var stimuli_processed = 1;
   var image_ids = [];
   for (var i = 1; i <= images_n; i++) {
       image_ids.push(i);
@@ -160,9 +159,7 @@
     require_movement: true,
     // response_ends_trial: true,
     on_finish: function(){
-        var proportion_complete = jsPsych.getProgressBarCompleted();
-        stimuli_processed = stimuli_processed + 1;
-        var progress_value = proportion_complete + stimuli_processed/images_participant;
+        var progress_value = jsPsych.getProgressBarCompleted() + 1/images_participant;
         jsPsych.setProgressBar(progress_value); // set progress bar to 85% full.
         console.log(progress_value);
     }
