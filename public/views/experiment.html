@@ -6,6 +6,7 @@
     <script src='jsPsych/jspsych.js'></script>
     <script src='jsPsych/plugins/jspsych-html-keyboard-response.js'></script>
     <script src='jsPsych/plugins/jspsych-survey-likert.js'></script>
+    <script src='jsPsych/plugins/jspsych-image-slider-response.js'></script>
     <script src='jsPsych/plugins/jspsych-call-function.js'></script>
     <link href='jsPsych/css/jspsych.css' rel='stylesheet' type='text/css'></link>
     <link href='css/experiment.css' rel='stylesheet' type='text/css'></link>
@@ -109,7 +110,8 @@
       image_name = image_prefix + 'image_' + image_ids_slice[i] + '.jpg';
       test_stimuli_1.push(
       {
-        preamble: '<img src=\'' + image_name + '\'>'
+        // preamble: '<img src=\'' + image_name + '\'>'
+        stimulus: image_name
       }
     );
   }
@@ -139,14 +141,20 @@
   ];
 
   /* randomise list and pick the first 40 */
-  var image_block_1 = {
+  var image_block_likert = {
     type: 'survey-likert',
     timeline: test_stimuli_1,
     questions: [
-      {prompt: "As a pedestrian, how intuitive is the color on the bumper of the car as a representation of the message 'Please cross the road'?", labels: scale_2, required: true},
-      {prompt: "How much do you like the color on the bumper?", labels: scale_2, required: true},
-      {prompt: "How intuitive is the color on the bumper?", labels: scale_2, required: true}
+      {prompt: "As a pedestrian, how intuitive is the color on the bumper as a representation of the message 'Please cross the road'?", labels: scale_2, required: true}
     ]
+  };
+
+  var image_block_slider = {
+    type: 'image-slider-response',
+    timeline: test_stimuli_1,
+    labels: ['0', '100'],
+    prompt: "<p>As a pedestrian, how intuitive is the color on the bumper as a representation of the message 'Please cross the road'?</p>",
+    require_movement: true
   };
 
   var save_data_block = {
@@ -171,7 +179,7 @@
   /* create experiment timeline array */
   var timeline = [];
   timeline.push(instructions_block);
-  timeline.push(image_block_1);
+  timeline.push(image_block_slider);
   timeline.push(save_data_block);
 
   /* MTurk information */
