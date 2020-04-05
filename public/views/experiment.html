@@ -7,7 +7,6 @@
     <script src='jsPsych/plugins/jspsych-html-keyboard-response.js'></script>
     <script src='jsPsych/plugins/jspsych-survey-likert.js'></script>
     <script src='jsPsych/plugins/jspsych-call-function.js'></script>
-    <script src='views/dir.php'></script>
     <link href='jsPsych/css/jspsych.css' rel='stylesheet' type='text/css'></link>
     <link href='css/experiment.css' rel='stylesheet' type='text/css'></link>
     <link rel='icon' type='image/png' href='/img/favicon.png' />
@@ -77,8 +76,7 @@
   }
 
   // video_prefix = 'https://videos-animations-crowdsourced.s3.eu-central-1.amazonaws.com/video_';
-  var video_prefix = 'img/stimuli/';
-  var num_groups = 4;
+  var image_prefix = 'img/stimuli/';
 
   // group 1
   // create array of video_ids, remove 0th id, shuffle
@@ -88,15 +86,10 @@
   for (var i = 1; i <= images_n; i++) {
       image_ids.push(i);
   }
-
-  // var fs = require('fs');
-  // var image_files = fs.readdirSync(video_prefix);
-  // image_files = shuffle(image_files);
-
-  var image_files = files;
+  image_ids = shuffle(image_ids);
 
   console.log(finish_code);
-  console.log(image_files);
+  console.log(image_ids);
 
     /* define instructions block */
   var instructions_block = {
@@ -107,7 +100,7 @@
 
   /* dynamically build a list of images for block 1 */
   for (var i = 0; i <= images_participant; i++) {
-      image_name = image_files[i];
+      image_name = image_prefix + image_ids[i] + '.jps';
       test_stimuli_1.push(
       {
         sources: [image_name],
@@ -129,11 +122,13 @@
   /* randomise list and pick the first 40 */
   var image_block_1 = {
     type: 'survey-likert',
+    timeline: test_stimuli_1,
     questions: [
       {prompt: "I like vegetables.", labels: scale_1}
     ],
     preamble: '<img src=\'' + test_stimuli_1[0] + '\'>'
   };
+  
   var save_data_block = {
     type: 'call-function',
     func:  function() {
