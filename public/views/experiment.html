@@ -156,8 +156,11 @@
     slider_width: 1000,
     // labels: ['Not intuitive at all', 'Completely intuitive'],
     prompt: "<p style='width: 1000px'>Imagine that you are a pedestrian and the car wants to let you go first. Please rate the following statement: <strong>The color on the bumper is intuitive for signaling \'Please cross the road\'</strong> (0 = completely disagree, 100 = completely agree).</p>",
-    require_movement: true
-    // response_ends_trial: true
+    require_movement: true,
+    // response_ends_trial: true,
+    on_finish: function(){
+        jsPsych.setProgressBar(0.85); // set progress bar to 85% full.
+    }
   };
 
   var save_data_block = {
