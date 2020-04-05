@@ -81,7 +81,7 @@
   // group 1
   // create array of video_ids, remove 0th id, shuffle
   var images_n = 729; // number of videos + 1
-  var images_participant = 100; // number of videos + 1
+  var images_participant = 5; // number of videos + 1
   var image_ids = [];
   for (var i = 1; i <= images_n; i++) {
       image_ids.push(i);
@@ -100,7 +100,7 @@
 
   /* dynamically build a list of images for block 1 */
   for (var i = 0; i <= images_participant; i++) {
-      image_name = image_prefix + image_ids[i] + '.jps';
+      image_name = image_prefix + image_ids[i] + '.jpg';
       test_stimuli_1.push(
       {
         preamble: '<img src=\'' + image_name + '\'>',
