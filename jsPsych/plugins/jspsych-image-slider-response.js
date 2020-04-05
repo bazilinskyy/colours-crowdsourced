@@ -139,7 +139,7 @@ jsPsych.plugins['image-slider-response'] = (function() {
     }
     html += '"></img>';
     html += '</div>';
-    html += '<div class="jspsych-image-slider-response-container" style="position:relative; margin: 0 auto 3em auto; ';
+    html += '<div class="jspsych-image-slider-response-container" style="position:relative; margin: 0 auto 1em auto; ';
     if(trial.slider_width !== null){
       html += 'width:'+trial.slider_width+'px;';
     }
