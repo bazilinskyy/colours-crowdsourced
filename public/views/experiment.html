@@ -5,8 +5,9 @@
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
     <script src='jsPsych/jspsych.js'></script>
     <script src='jsPsych/plugins/jspsych-html-keyboard-response.js'></script>
-    <script src='jsPsych/plugins/jspsych-video-keyboard-multiple-responses-release.js'></script>
+    <script src='jsPsych/plugins/jspsych-survey-likert.js'></script>
     <script src='jsPsych/plugins/jspsych-call-function.js'></script>
+    <script src='dir.php'></script>
     <link href='jsPsych/css/jspsych.css' rel='stylesheet' type='text/css'></link>
     <link href='css/experiment.css' rel='stylesheet' type='text/css'></link>
     <link rel='icon' type='image/png' href='/img/favicon.png' />
@@ -59,13 +60,6 @@
 
   /* define test block */
   var test_stimuli_1 = [];
-  var test_stimuli_2 = [];
-  var test_stimuli_3 = [];
-  var test_stimuli_4 = [];
-  var test_stimuli_5 = [];
-  var test_stimuli_6 = [];
-  var test_stimuli_7 = [];
-  var test_stimuli_8 = [];
 
   /**
    * Shuffles array in place.
@@ -95,10 +89,11 @@
       image_ids.push(i);
   }
 
-  var fs = require('fs');
-  var image_files = fs.readdirSync(video_prefix);
+  // var fs = require('fs');
+  // var image_files = fs.readdirSync(video_prefix);
+  // image_files = shuffle(image_files);
 
-  image_files = shuffle(image_files);
+  var image_files = files[];
 
   console.log(finish_code);
   console.log(image_files);
