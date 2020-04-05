@@ -124,14 +124,28 @@
     "Agree strongly"
   ];
 
+  var scale_2 = [
+    "0", 
+    "1", 
+    "2", 
+    "3", 
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10"
+  ];
+
   /* randomise list and pick the first 40 */
   var image_block_1 = {
     type: 'survey-likert',
     timeline: test_stimuli_1,
     questions: [
-      {prompt: "I like vegetables.", labels: scale_1, required: true},
-      {prompt: "I like fruit.", labels: scale_1, required: true},
-      {prompt: "Crowdsourcing is a way to go.", labels: scale_1, required: true}
+      {prompt: "I like vegetables.", labels: scale_2, required: true},
+      {prompt: "I like fruit.", labels: scale_2, required: true},
+      {prompt: "Crowdsourcing is a way to go.", labels: scale_2, required: true}
     ]
   };
 
