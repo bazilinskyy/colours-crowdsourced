@@ -1,4 +1,3 @@
-<?php
 var files = <?php $out = array();
 foreach (glob('img/stimuli/*.jpg') as $filename) {
     $p = pathinfo($filename);
