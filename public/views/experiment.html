@@ -111,9 +111,7 @@
       test_stimuli_1.push(
       {
         // preamble: '<img src=\'' + image_name + '\'>'
-        stimulus: image_name,
-        // require_movement: true,
-        response_ends_trial: true
+        stimulus: image_name
       }
     );
   }
@@ -156,7 +154,7 @@
     timeline: test_stimuli_1,
     labels: ['0', '100'],
     prompt: "<p>As a pedestrian, how clear is the color on the bumper as a representation of the message 'Please cross the road'?</p>",
-    // require_movement: true,
+    require_movement: true
     // response_ends_trial: true
   };
 
