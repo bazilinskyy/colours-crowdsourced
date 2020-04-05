@@ -152,8 +152,9 @@
   var image_block_slider = {
     type: 'image-slider-response',
     timeline: test_stimuli_1,
-    labels: ['Not intuitive at all', 'Completely intuitive'],
-    prompt: "<p>As a pedestrian, how clear is the color on the bumper as a representation of the message 'Please cross the road'?</p>",
+    labels: ['0', '20', '40', '60', '80', '100'],
+    // labels: ['Not intuitive at all', 'Completely intuitive'],
+    prompt: "<p>Imagine that you are a pedestrian and the car wants to let you go first. Would you agree with the following statement: The color on the bumper is intuitive as a message \'Please cross the road\'? (0 = completely disagree, 100 = completely agree)</p>",
     require_movement: true
     // response_ends_trial: true
   };
