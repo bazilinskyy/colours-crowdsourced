@@ -112,11 +112,11 @@
   }
 
   var scale_1 = [
-    "Strongly Disagree", 
-    "Disagree", 
-    "Neutral", 
-    "Agree", 
-    "Strongly Agree"
+    "Disagree strongly", 
+    "Disagree a little", 
+    "Neither agree nor disagree", 
+    "Neither agree nor disagree", 
+    "Agree strongly"
   ];
 
   /* randomise list and pick the first 40 */
@@ -124,7 +124,9 @@
     type: 'survey-likert',
     timeline: test_stimuli_1,
     questions: [
-      {prompt: "I like vegetables.", labels: scale_1}
+      {prompt: "I like vegetables.", labels: scale_1},
+      {prompt: "I like fruit.", labels: scale_1},
+      {prompt: "Crowdsourcing is a way to go.", labels: scale_1}
     ]
   };
 
