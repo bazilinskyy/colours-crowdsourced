@@ -91,6 +91,7 @@
 
   console.log(finish_code);
   console.log(image_ids);
+  console.log(image_ids_slice);
 
     /* define instructions block */
   var instructions_block = {
@@ -99,13 +100,13 @@
     choices: ['C'],
     on_finish: function(data){
       jsPsych.data.addDataToLastTrial({worker_code: finish_code});
-      jsPsych.data.addDataToLastTrial({image_id: image_ids});
+      jsPsych.data.addDataToLastTrial({image_id: image_ids_slice});
     }
   };
 
   /* dynamically build a list of images for block 1 */
   for (var i = 0; i < images_participant; i++) {
-      image_name = image_prefix + 'image_' + image_ids[i] + '.jpg';
+      image_name = image_prefix + 'image_' + image_ids_slice[i] + '.jpg';
       test_stimuli_1.push(
       {
         preamble: '<img src=\'' + image_name + '\'>'
