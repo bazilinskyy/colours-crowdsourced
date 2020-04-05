@@ -88,7 +88,7 @@
       image_ids.push(i);
   }
   image_ids = shuffle(image_ids);
-  var image_ids_slice = image_ids.slice(1, images_participant + 1);
+  var image_ids_slice = image_ids.slice(0, images_participant);
 
   console.log(finish_code);
   console.log(image_ids);
