@@ -83,6 +83,7 @@
   // create array of video_ids, remove 0th id, shuffle
   var images_n = 729; // number of videos + 1
   var images_participant = 100; // number of videos + 1
+  var stimuli_processed = 1;
   var image_ids = [];
   for (var i = 1; i <= images_n; i++) {
       image_ids.push(i);
@@ -159,7 +160,11 @@
     require_movement: true,
     // response_ends_trial: true,
     on_finish: function(){
-        jsPsych.setProgressBar(0.85); // set progress bar to 85% full.
+        var proportion_complete = jsPsych.getProgressBarCompleted();
+        stimuli_processed = stimuli_processed + 1;
+        var progress_value = proportion_complete + stimuli_processed/images_participant;
+        jsPsych.setProgressBar(progress_value); // set progress bar to 85% full.
+        console.log(progress_value);
     }
   };
 
@@ -202,6 +207,7 @@
     show_preload_progress_bar: true,
     timeline: timeline,
     show_progress_bar: true,
+    auto_update_progress_bar: false,
     max_load_time: 3000000,
     on_finish: function() {
       window.location.href = 'finish?work=' + finish_code;
