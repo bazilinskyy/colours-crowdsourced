@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Images of eHMI of varying colour</title>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script src='jsPsych/jspsych.js'></script>
+    <script src='jsPsych/plugins/jspsych-html-keyboard-response.js'></script>
+    <script src='jsPsych/plugins/jspsych-video-keyboard-multiple-responses-release.js'></script>
+    <script src='jsPsych/plugins/jspsych-call-function.js'></script>
+    <link href='jsPsych/css/jspsych.css' rel='stylesheet' type='text/css'></link>
+    <link href='css/experiment.css' rel='stylesheet' type='text/css'></link>
+    <link rel='icon' type='image/png' href='/img/favicon.png' />
+  </head>
+  <body>
+  </body>
+  <script>
+
+
+  /**
+   * Returns a random integer between min (inclusive) and max (inclusive).
+   * The value is no lower than min (or the next integer greater than min
+   * if min isn't an integer) and no greater than max (or the next integer
+   * lower than max if max isn't an integer).
+   */
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  /**
+   * Ger parameter from the URL.
+   */
+  var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+  };
+
+  /**
+   * Get finish code in the given format.
+   */
+  function getFinishCode() {
+      var timestamp = window.performance.timing.navigationStart + window.performance.now();
+      var current_time = Math.round(timestamp);
+      var random_num = getRandomInt(1, 10000);
+      finish_code = 'D8' + current_time + 'CO' + random_num + '6D';
+    return finish_code;
+  }
+
+  var finish_code = getFinishCode();
+
+  /* define test block */
+  var test_stimuli_1 = [];
+  var test_stimuli_2 = [];
+  var test_stimuli_3 = [];
+  var test_stimuli_4 = [];
+  var test_stimuli_5 = [];
+  var test_stimuli_6 = [];
+  var test_stimuli_7 = [];
+  var test_stimuli_8 = [];
+
+  /**
+   * Shuffles array in place.
+   * @param {Array} a items An array containing the items.
+   */
+  function shuffle(a) {
+      var j, x, i;
+      for (i = a.length - 1; i > 0; i--) {
+          j = Math.floor(Math.random() * (i + 1));
+          x = a[i];
+          a[i] = a[j];
+          a[j] = x;
+      }
+      return a;
+  }
+
+  // video_prefix = 'https://videos-animations-crowdsourced.s3.eu-central-1.amazonaws.com/video_';
+  var video_prefix = 'img/stimuli/';
+  var num_groups = 4;
+
+  // group 1
+  // create array of video_ids, remove 0th id, shuffle
+  var images_n = 729; // number of videos + 1
+  var images_participant = 100; // number of videos + 1
+  var image_ids = [];
+  for (var i = 1; i <= images_n; i++) {
+      image_ids.push(i);
+  }
+
+  var fs = require('fs');
+  var image_files = fs.readdirSync(video_prefix);
+
+  image_files = shuffle(image_files);
+
+  console.log(finish_code);
+  console.log(image_files);
+
+    /* define instructions block */
+  var instructions_block = {
+    type: 'html-keyboard-response',
+    stimulus: '<p>The purpose of this experiment is to determine your willingness to cross in front of an automated vehicle. In the following images, you will see an automated vehicle that stopped in front of you after approaching you.</p><p>You will view 100 images. Each image will be on a separate page. For each image you will need to answer a few quetsions. The window of your browser should be at least 1300px wide and 800px tall. Press \'C\' to start the first video.</p>',
+    choices: ['C'],
+  };
+
+  /* dynamically build a list of images for block 1 */
+  for (var i = 0; i <= images_participant; i++) {
+      image_name = image_files[i];
+      test_stimuli_1.push(
+      {
+        sources: [image_name],
+        on_finish: function(data){
+          jsPsych.data.addDataToLastTrial({worker_code: finish_code});
+        }
+      }
+    );
+  }
+
+  var scale_1 = [
+    "Strongly Disagree", 
+    "Disagree", 
+    "Neutral", 
+    "Agree", 
+    "Strongly Agree"
+  ];
+
+  /* randomise list and pick the first 40 */
+  var image_block_1 = {
+    type: 'survey-likert',
+    questions: [
+      {prompt: "I like vegetables.", labels: scale_1}
+    ],
+    preamble: '<img src=\'' + test_stimuli_1[0] + '\'>'
+  };
+  var save_data_block = {
+    type: 'call-function',
+    func:  function() {
+      $.ajax({
+          type: 'POST',
+          url: '/experiment-data',
+          data: jsPsych.data.get().json(),
+          contentType: 'application/json'
+        })
+        .done(function() {
+          jsPsych.data.reset();
+        })
+        .fail(function() {
+          alert('A problem occurred while writing to the database. Please contact the researcher for more information.')
+          window.location.href = '/';
+        })
+      }
+  }
+
+  /* create experiment timeline array */
+  var timeline = [];
+  timeline.push(instructions_block);
+  timeline.push(image_block_1);
+  timeline.push(save_data_block);
+
+  /* MTurk information */
+  var turkInfo = jsPsych.turk.turkInfo();
+  if(turkInfo.previewMode && !turkInfo.outsideTurk) {
+    worker_id = turkInfo.workerId;
+  } else {
+    worker_id = String(Date.now());
+  }
+  timestamp = String(Date.now());
+
+  /* Start the experiment */
+  jsPsych.init({
+    show_preload_progress_bar: true,
+    timeline: timeline,
+    max_load_time: 3000000,
+    on_finish: function() {
+      window.location.href = 'finish?work=' + finish_code;
+    }
+  });
+
+</script>
+</html>
