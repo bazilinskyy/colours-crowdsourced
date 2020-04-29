@@ -1,1 +1,1 @@
-# colours-crwodsourced
+# The heroku-side code for Experiment 1 described in the article Bazilinskyy, P., Dodou, D., & De Winter, J. C. F. (2020). External Human-Machine Interfaces: Which of 729 Colors Is Best for Signaling ‘Please (Do not) Cross’? Available at https://www.researchgate.net/publication/341025595_External_Human-Machine_Interfaces_Which_of_729_colors_is_best_for_signaling_'Please_do_not_Cross'
